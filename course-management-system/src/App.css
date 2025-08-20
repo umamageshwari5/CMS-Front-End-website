@@ -1,0 +1,23 @@
+/* src/App.css */
+
+body {
+  margin: 0;
+  font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
+  background-color: #f4f6f8; /* This should match the theme's background */
+}
+
+.main-content {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.form-card {
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 24px;
+}
+
+.form-button {
+  width: 100%;
+}
