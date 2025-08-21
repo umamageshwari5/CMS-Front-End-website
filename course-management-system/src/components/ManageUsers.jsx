@@ -1,7 +1,8 @@
+// src/components/ManageUsers.jsx
+
 import React from "react";
 import {
   Typography,
-  Container,
   Card,
   CardContent,
   List,
@@ -12,16 +13,18 @@ import {
   Button,
   Box,
 } from "@mui/material";
-import { ArrowBack, Edit, Delete } from "@mui/icons-material";
+import { ArrowBack, Delete } from "@mui/icons-material";
+import { message } from "antd";
 
-const ManageUsers = ({ users, onBackClick }) => {
-  const handleEdit = (user) => {
-    alert(`Editing user: ${user.email}`);
+const ManageUsers = ({ onBackClick, users, onDeleteUser }) => {
+  const handleDelete = (userId) => {
+    if (window.confirm("Are you sure you want to delete this user?")) {
+      // The deletion is now handled by the parent component (App.jsx)
+      onDeleteUser(userId);
+    }
   };
 
-  const handleDelete = (user) => {
-    alert(`Deleting user: ${user.email}`);
-  };
+  const nonAdminUsers = users.filter((user) => user.role !== "admin");
 
   return (
     <Box sx={{ maxWidth: "800px", margin: "0 auto", padding: "24px" }}>
@@ -34,28 +37,28 @@ const ManageUsers = ({ users, onBackClick }) => {
             Manage Users
           </Typography>
           <List>
-            {users.map((user) => (
-              <ListItem key={user.id} divider>
-                <ListItemText
-                  primary={user.email}
-                  secondary={`Role: ${user.role}`}
-                />
-                <ListItemSecondaryAction>
-                  <IconButton
-                    edge="end"
-                    aria-label="edit"
-                    onClick={() => handleEdit(user)}>
-                    <Edit />
-                  </IconButton>
-                  <IconButton
-                    edge="end"
-                    aria-label="delete"
-                    onClick={() => handleDelete(user)}>
-                    <Delete />
-                  </IconButton>
-                </ListItemSecondaryAction>
-              </ListItem>
-            ))}
+            {nonAdminUsers.length > 0 ? (
+              nonAdminUsers.map((user) => (
+                <ListItem key={user._id} divider>
+                  <ListItemText
+                    primary={user.email}
+                    secondary={`Role: ${user.role}`}
+                  />
+                  <ListItemSecondaryAction>
+                    <IconButton
+                      edge="end"
+                      aria-label="delete"
+                      onClick={() => handleDelete(user._id)}>
+                      <Delete />
+                    </IconButton>
+                  </ListItemSecondaryAction>
+                </ListItem>
+              ))
+            ) : (
+              <Typography variant="body1" sx={{ textAlign: "center", my: 2 }}>
+                No student users found.
+              </Typography>
+            )}
           </List>
         </CardContent>
       </Card>

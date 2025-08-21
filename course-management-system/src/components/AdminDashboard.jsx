@@ -1,3 +1,5 @@
+// src/components/AdminDashboard.jsx
+
 import React from "react";
 import {
   Typography,
@@ -5,11 +7,29 @@ import {
   Card,
   CardContent,
   CardActionArea,
+  Grid,
+  Button,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemSecondaryAction,
+  IconButton,
 } from "@mui/material";
-import { AdminPanelSettings, AddCircle, People } from "@mui/icons-material";
-import { Grid } from "@mui/material";
+import {
+  AdminPanelSettings,
+  AddCircle,
+  People,
+  Edit,
+  Delete,
+} from "@mui/icons-material";
 
-const AdminDashboard = ({ onAddCourseClick, onManageUsersClick }) => {
+const AdminDashboard = ({
+  courses,
+  onAddCourseClick,
+  onManageUsersClick,
+  onEditCourseClick,
+  onDeleteCourseClick,
+}) => {
   return (
     <Container maxWidth="lg" sx={{ mt: 4, textAlign: "center" }}>
       <Typography variant="h4" component="h1" gutterBottom>
@@ -26,10 +46,10 @@ const AdminDashboard = ({ onAddCourseClick, onManageUsersClick }) => {
               <CardContent>
                 <AddCircle color="primary" sx={{ fontSize: 60 }} />
                 <Typography variant="h6" sx={{ mt: 2 }}>
-                  Add New Course
+                  Add a New Course
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Create new courses for students to enroll in.
+                  Create a new course for students to enroll in.
                 </Typography>
               </CardContent>
             </Card>
@@ -51,6 +71,39 @@ const AdminDashboard = ({ onAddCourseClick, onManageUsersClick }) => {
           </CardActionArea>
         </Grid>
       </Grid>
+      <Typography variant="h5" sx={{ mt: 6, mb: 2, textAlign: "left" }}>
+        Existing Courses
+      </Typography>
+      <List sx={{ textAlign: "left" }}>
+        {Array.isArray(courses) && courses.length > 0 ? (
+          courses.map((course) => (
+            <ListItem key={course._id} divider>
+              <ListItemText
+                primary={course.title}
+                secondary={course.description}
+              />
+              <ListItemSecondaryAction>
+                <IconButton
+                  edge="end"
+                  aria-label="edit"
+                  onClick={() => onEditCourseClick(course)}>
+                  <Edit />
+                </IconButton>
+                <IconButton
+                  edge="end"
+                  aria-label="delete"
+                  onClick={() => onDeleteCourseClick(course._id)}>
+                  <Delete />
+                </IconButton>
+              </ListItemSecondaryAction>
+            </ListItem>
+          ))
+        ) : (
+          <Typography variant="body1" sx={{ mt: 2, textAlign: "center" }}>
+            No courses have been added yet.
+          </Typography>
+        )}
+      </List>
     </Container>
   );
 };

@@ -5,13 +5,12 @@ import { Form, Input, Button, message } from "antd";
 import { Card } from "@mui/material";
 import "./FormStyles.css";
 
-const ForgotPassword = () => {
+const ForgotPassword = ({ onBackClick, onForgotPassword }) => {
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
-    console.log("Password reset requested for:", values);
-    message.success(`A password reset link has been sent to ${values.email}.`);
-    // Here we will add logic to send a reset email in the future
+    onForgotPassword(values.email);
+    form.resetFields();
   };
 
   return (
@@ -34,13 +33,19 @@ const ForgotPassword = () => {
           ]}>
           <Input placeholder="Enter your email" />
         </Form.Item>
-
         <Form.Item>
           <Button type="primary" htmlType="submit" className="form-button">
             Send Reset Link
           </Button>
         </Form.Item>
       </Form>
+      <Button
+        onClick={onBackClick}
+        type="link"
+        block
+        style={{ marginTop: "16px" }}>
+        Back to Login
+      </Button>
     </Card>
   );
 };

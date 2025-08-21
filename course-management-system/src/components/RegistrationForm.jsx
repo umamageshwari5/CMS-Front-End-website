@@ -5,17 +5,22 @@ import { Form, Input, Button, message } from "antd";
 import { Card } from "@mui/material";
 import "./FormStyles.css";
 
-// The prop now expects to be called with user data
-const RegistrationForm = ({ onSuccessfulRegistration }) => {
+const RegistrationForm = ({ onSuccessfulRegistration, allUsers }) => {
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
-    console.log("Registration form submitted:", values);
+    const emailExists = allUsers.some((user) => user.email === values.email);
+    if (emailExists) {
+      message.error("This email is already registered.");
+      return;
+    }
 
-    message.success("Registration successful! Please log in.");
-
-    // Pass the form values back to the parent component
-    onSuccessfulRegistration(values);
+    onSuccessfulRegistration({
+      email: values.email,
+      password: values.password,
+      role: "student",
+    });
+    form.resetFields();
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -32,29 +37,20 @@ const RegistrationForm = ({ onSuccessfulRegistration }) => {
         onFinishFailed={onFinishFailed}
         layout="vertical">
         <Form.Item
-          label="Username"
-          name="username"
-          rules={[{ required: true, message: "Please input your username!" }]}>
-          <Input placeholder="Choose a username" />
-        </Form.Item>
-
-        <Form.Item
           label="Email"
           name="email"
           rules={[
             { required: true, message: "Please input your email!" },
             { type: "email", message: "The input is not a valid email!" },
           ]}>
-          <Input placeholder="Enter your email" />
+          <Input placeholder="Enter your email" autoComplete="off" />
         </Form.Item>
-
         <Form.Item
           label="Password"
           name="password"
           rules={[{ required: true, message: "Please input your password!" }]}>
-          <Input.Password placeholder="Create a password" />
+          <Input.Password placeholder="Create a password" autoComplete="off" />
         </Form.Item>
-
         <Form.Item>
           <Button type="primary" htmlType="submit" className="form-button">
             Register

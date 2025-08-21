@@ -1,38 +1,27 @@
-// src/components/AddCourseForm.jsx
+// src/components/EditCourseForm.jsx
 
-import React from "react";
-import { Form, Input, Button, message, Select } from "antd";
-import { Typography, Card, CardContent, Box, Container } from "@mui/material";
+import React, { useEffect } from "react";
+import { Form, Input, Button, message } from "antd";
+import { Typography, Card, CardContent, Container } from "@mui/material";
 import { ArrowBack } from "@mui/icons-material";
-import {
-  Laptop,
-  Code,
-  Storage,
-  Web,
-  Computer,
-  Cloud,
-} from "@mui/icons-material";
 import "./FormStyles.css";
 
-const { Option } = Select;
-
-const renderIconOption = (IconComponent, name) => (
-  <Option key={name} value={name}>
-    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-      <IconComponent />
-      {name}
-    </Box>
-  </Option>
-);
-
-const AddCourseForm = ({ onAddCourse, onBackClick }) => {
+const EditCourseForm = ({ course, onUpdateCourse, onBackClick }) => {
   const [form] = Form.useForm();
 
+  useEffect(() => {
+    if (course) {
+      form.setFieldsValue({
+        title: course.title,
+        description: course.description,
+      });
+    }
+  }, [course, form]);
+
   const onFinish = (values) => {
-    console.log("Adding course:", values);
-    onAddCourse(values);
-    form.resetFields();
-    message.success("Course added successfully!");
+    console.log("Updating course:", values);
+    onUpdateCourse(course._id, values);
+    message.success("Course updated successfully!");
   };
 
   return (
@@ -43,11 +32,11 @@ const AddCourseForm = ({ onAddCourse, onBackClick }) => {
       <Card>
         <CardContent>
           <Typography variant="h5" sx={{ mb: 2 }}>
-            Add New Course
+            Edit Course
           </Typography>
           <Form
             form={form}
-            name="add_course_form"
+            name="edit_course_form"
             onFinish={onFinish}
             layout="vertical">
             <Form.Item
@@ -69,22 +58,9 @@ const AddCourseForm = ({ onAddCourse, onBackClick }) => {
                 placeholder="A brief overview of the course content."
               />
             </Form.Item>
-            <Form.Item
-              label="Icon"
-              name="icon"
-              rules={[{ required: true, message: "Please select an icon!" }]}>
-              <Select placeholder="Select an icon for the course">
-                {renderIconOption(Laptop, "Laptop")}
-                {renderIconOption(Code, "Code")}
-                {renderIconOption(Storage, "Storage")}
-                {renderIconOption(Web, "Web")}
-                {renderIconOption(Computer, "Computer")}
-                {renderIconOption(Cloud, "Cloud")}
-              </Select>
-            </Form.Item>
             <Form.Item>
               <Button type="primary" htmlType="submit" className="form-button">
-                Add Course
+                Update Course
               </Button>
             </Form.Item>
           </Form>
@@ -94,4 +70,4 @@ const AddCourseForm = ({ onAddCourse, onBackClick }) => {
   );
 };
 
-export default AddCourseForm;
+export default EditCourseForm;

@@ -1,24 +1,44 @@
-import React from "react";
-import { Card, CardContent, Typography, CardActionArea } from "@mui/material";
-import { Laptop, Code, Storage } from "@mui/icons-material";
+// src/components/CourseCard.jsx
 
-// Function to choose the correct icon based on the course
-const getIcon = (courseTitle) => {
-  if (courseTitle.includes("React"))
-    return <Laptop color="primary" sx={{ fontSize: 60 }} />;
-  if (courseTitle.includes("Node.js"))
-    return <Code color="primary" sx={{ fontSize: 60 }} />;
-  if (courseTitle.includes("MongoDB"))
-    return <Storage color="primary" sx={{ fontSize: 60 }} />;
-  return null;
+import React from "react";
+import {
+  Card,
+  CardContent,
+  Typography,
+  CardActionArea,
+  Button,
+} from "@mui/material";
+import {
+  Laptop,
+  Code,
+  Storage,
+  Web,
+  Computer,
+  Cloud,
+} from "@mui/icons-material";
+
+const iconMap = {
+  Laptop: Laptop,
+  Code: Code,
+  Storage: Storage,
+  Web: Web,
+  Computer: Computer,
+  Cloud: Cloud,
 };
 
-const CourseCard = ({ course, onClick }) => {
+const getIcon = (iconName) => {
+  const IconComponent = iconMap[iconName];
+  return IconComponent ? (
+    <IconComponent color="primary" sx={{ fontSize: 60 }} />
+  ) : null;
+};
+
+const CourseCard = ({ course, onClick, showEnrollButton, onEnroll }) => {
   return (
     <Card>
       <CardActionArea onClick={onClick}>
         <CardContent sx={{ textAlign: "center" }}>
-          {getIcon(course.title)}
+          {getIcon(course.icon)}
           <Typography variant="h6" sx={{ mt: 2 }}>
             {course.title}
           </Typography>
@@ -27,6 +47,16 @@ const CourseCard = ({ course, onClick }) => {
           </Typography>
         </CardContent>
       </CardActionArea>
+      {showEnrollButton && (
+        <Button
+          fullWidth
+          variant="contained"
+          color="primary"
+          onClick={onEnroll}
+          sx={{ mt: 1, borderTopLeftRadius: 0, borderTopRightRadius: 0 }}>
+          Enroll
+        </Button>
+      )}
     </Card>
   );
 };

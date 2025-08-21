@@ -1,41 +1,69 @@
-// src/theme.js
-
 import { createTheme } from "@mui/material/styles";
+import { red } from "@mui/material/colors";
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#2196f3", // A professional-looking blue
+      main: "#1976d2",
     },
     secondary: {
-      main: "#f50057", // A contrasting pink for accents
+      main: "#dc004e",
+    },
+    error: {
+      main: red.A400,
     },
     background: {
-      default: "#f4f6f8", // A light, clean background color
+      default: "#f0f2f5",
+      paper: "#fff",
     },
   },
   typography: {
-    fontFamily: ["Roboto", '"Helvetica Neue"', "Arial", "sans-serif"].join(","),
-    h4: {
-      fontWeight: 600,
+    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
+    h1: {
+      fontSize: "2.5rem",
+      fontWeight: 500,
+      marginBottom: "1rem",
     },
-    h5: {
+    h2: {
+      fontSize: "2rem",
+      fontWeight: 500,
+      marginBottom: "0.8rem",
+    },
+    h3: {
+      fontSize: "1.75rem",
+      fontWeight: 500,
+      marginBottom: "0.6rem",
+    },
+    body1: {
+      fontSize: "1rem",
+      lineHeight: 1.5,
+    },
+    button: {
+      textTransform: "none",
       fontWeight: 500,
     },
   },
   components: {
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "#1976d2",
+          color: "#fff",
+        },
+      },
+    },
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: 8, // A slightly rounded button
+          borderRadius: "4px",
         },
       },
     },
     MuiCard: {
       styleOverrides: {
         root: {
-          borderRadius: 12, // More rounded card corners
-          boxShadow: "0 4px 20px rgba(0,0,0,0.1)", // Soft shadow for a modern look
+          borderRadius: "8px",
+          boxShadow: "0 4px 12px rgba(0, 0, 0, 0.05)",
         },
       },
     },

@@ -12,10 +12,10 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
 const Header = ({
-  onLoginClick,
-  onRegisterClick,
   isAuthenticated,
   onLogout,
+  onLoginClick,
+  onRegisterClick,
   onAdminLoginClick,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -34,7 +34,6 @@ const Header = ({
           Course Management System
         </Typography>
 
-        {/* Desktop View */}
         <Box sx={{ display: { xs: "none", sm: "block" } }}>
           {isAuthenticated ? (
             <Button color="inherit" onClick={onLogout}>
@@ -55,7 +54,6 @@ const Header = ({
           )}
         </Box>
 
-        {/* Mobile View */}
         <Box sx={{ display: { xs: "block", sm: "none" } }}>
           <IconButton
             size="large"
@@ -81,29 +79,32 @@ const Header = ({
                 Logout
               </MenuItem>
             ) : (
-              <>
+              [
                 <MenuItem
+                  key="login"
                   onClick={() => {
                     handleClose();
                     onLoginClick();
                   }}>
                   Student Login
-                </MenuItem>
+                </MenuItem>,
                 <MenuItem
+                  key="admin-login"
                   onClick={() => {
                     handleClose();
                     onAdminLoginClick();
                   }}>
                   Admin Login
-                </MenuItem>
+                </MenuItem>,
                 <MenuItem
+                  key="register"
                   onClick={() => {
                     handleClose();
                     onRegisterClick();
                   }}>
                   Register
-                </MenuItem>
-              </>
+                </MenuItem>,
+              ]
             )}
           </Menu>
         </Box>
