@@ -18,6 +18,8 @@ import { Typography, Button, Container, Grid } from "@mui/material";
 import { Person, AdminPanelSettings } from "@mui/icons-material";
 import "./App.css";
 
+const API_URL = "https://cms-website-back-end.onrender.com/api";
+
 function App() {
   const [view, setView] = useState("welcome");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
