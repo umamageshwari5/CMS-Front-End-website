@@ -18,7 +18,7 @@ import { Typography, Button, Container, Grid } from "@mui/material";
 import { Person, AdminPanelSettings } from "@mui/icons-material";
 import "./App.css";
 
-const API_URL = "https://cms-website-back-end.onrender.com/api";
+const API_URL = "http://localhost:3001/api";
 
 function App() {
   const [view, setView] = useState("welcome");
